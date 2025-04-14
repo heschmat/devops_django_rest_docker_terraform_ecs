@@ -1,5 +1,5 @@
 FROM nginxinc/nginx-unprivileged:1-alpine
-LABEL maintainer="londonappdeveloper.com"
+LABEL maintainer="hesch"
 
 COPY ./default.conf.tpl /etc/nginx/default.conf.tpl
 COPY ./uwsgi_params /etc/nginx/uwsgi_params
@@ -11,8 +11,9 @@ ENV APP_PORT=9000
 
 USER root
 
-RUN mkdir -p /vol/static && \
-    chmod 755 /vol/static && \
+RUN mkdir -p /vol/static && mkdir -p /vol/media && \
+    chmod 755 /vol && \
+    chown -R nginx:nginx /vol && \
     touch /etc/nginx/conf.d/default.conf && \
     chown nginx:nginx /etc/nginx/conf.d/default.conf && \
     chmod +x /run.sh
@@ -20,5 +21,9 @@ RUN mkdir -p /vol/static && \
 VOLUME /vol/static
 
 USER nginx
+
+# name the volumes so they can be picked up by ECS
+VOLUME /vol/static
+VOLUME /vol/media
 
 CMD ["/run.sh"]
