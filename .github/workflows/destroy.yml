@@ -1,0 +1,30 @@
+name: TF Destroy
+
+on:
+  # manually trigger in the GH UI `workflow_dispatch`
+  workflow_dispatch:
+    inputs:
+      environment:
+        # drop-down choice: staging | prod
+        type: choice
+        description: For which ennvironment to remove AWS resources?
+        options:
+          - staging
+          # for demo purposes only; to prevent incurring costs we also include `prod`
+          - prod
+jobs:
+  destroy:
+    name: TF destroy
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: TF destroy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          export TF_WORKSPACE=${{ github.envent.inputs.environment }}
+          cd infra/
+          docker compose run --rm terraform -chdir=deploy/ init
+          docker compose run --rm terraform -chdir=deploy/ destroy --auto-remove
