@@ -1,0 +1,13 @@
+name: checks
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  test_lint:
+    name: Test & Lint
+    uses: ./.github/wokflows/test-lint.yml
+    secrets:
+      DOCKERHUB_USER: ${{ vars.DH_USER }}
+      DOCKERHUB_TOKEN: ${{ secrets.DH_TOKEN }}
