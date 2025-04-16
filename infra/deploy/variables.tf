@@ -15,7 +15,7 @@ variable "contact" {
 
 variable "db_username" {
   description = "username for the recipe app api database"
-  default     = "recipe-app"
+  default     = "recipeuser"
 }
 
 variable "db_password" {
