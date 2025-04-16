@@ -32,7 +32,7 @@ resource "aws_security_group" "rds" {
 
 resource "aws_db_instance" "main" {
   identifier                 = "${local.prefix}-db" # e.g., raa-staging-db
-  db_name                    = "recipe-db"
+  db_name                    = "recipedb"
   allocated_storage          = 10
   storage_type               = "gp2"
   engine                     = "postgres"
