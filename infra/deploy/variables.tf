@@ -12,3 +12,12 @@ variable "contact" {
   description = "Contact name for tagging resources"
   default     = "hesch"
 }
+
+variable "db_username" {
+  description = "username for the recipe app api database"
+  default     = "recipe-app"
+}
+
+variable "db_password" {
+  description = "password for the terraform database"
+}
