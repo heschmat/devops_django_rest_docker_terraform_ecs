@@ -72,7 +72,7 @@ resource "aws_ecs_task_definition" "api" {
           value = var.django_secret_key
         },
         {
-          name  = "DB_HOSt"
+          name  = "DB_HOST"
           value = aws_db_instance.main.address
         },
         {
@@ -172,7 +172,7 @@ resource "aws_security_group" "ecs_service" {
   egress {
     from_port = 5432
     to_port   = 5432
-    protocol = "tcp"
+    protocol  = "tcp"
     cidr_blocks = [
       aws_subnet.private_a.cidr_block,
       aws_subnet.private_b.cidr_block,
